@@ -39,10 +39,6 @@ std::string msg;
 std::string key;
 
 int main() {
-
-	//temporary
-	//bool unix = true;
-
 	clearScreen();
 	std::string filenamestr;
 	std::cout << "Please enter the filepath to your 24bit bmp. (make sure to use forward slashes)" << std::endl;
@@ -112,8 +108,8 @@ void clearScreen() {
 		system("cls");
 	}
 }
-void xorEncrypt() {
 
+void xorEncrypt() {
 	int keylength = key.length();
 	int msglength = msg.length();
 	int i2;
@@ -124,7 +120,6 @@ void xorEncrypt() {
 }
 
 char xorDecrypt(char printchar) {
-
 	int keylength = key.length();
 	keyindex %= keylength;
 	printchar = printchar ^ key[keyindex];
@@ -132,16 +127,12 @@ char xorDecrypt(char printchar) {
 }
 
 unsigned char* readBMP(char* filename) {
-
 	FILE* f; 
 	f = fopen(filename, "rb");
 
 	if (f == NULL) {
 		throw "Argument Exception";
 	}
-
-	//FILE* f;
-	//fopen_s(&f, filename, "rb");
 
 	//read the 54-byte header
 	fread(info, sizeof(unsigned char), 54, f);
@@ -169,10 +160,6 @@ unsigned char* readBMP(char* filename) {
 }
 
 unsigned char* writeBMP(char* filename, unsigned char* data) {
-
-	//FILE* f;
-	//fopen_s(&f, filename, "wb");
-
 	FILE* f;
 	f = fopen(filename, "wb");
 
@@ -197,7 +184,6 @@ unsigned char* writeBMP(char* filename, unsigned char* data) {
 }
 
 unsigned char* mainLoop(unsigned char* data) {
-
 	int goloop = 0;
 	int msgposition = dataposition / 8;
 	while (goloop < 7){
@@ -295,7 +281,6 @@ unsigned char* mainLoop(unsigned char* data) {
 }
 
 void printLoop(unsigned char* data) {
-
 	for(int i = 0; i < datalength / 8; i++) {
 		outputchar = 0x00;
 		if (data[8 * i + 0] & 0x01 != 0) {
