@@ -101,11 +101,11 @@ int main() {
 }
 
 void clearScreen() {
-	if (unix) {
-		system("clear");
-	}
-	else if (!unix) {
+	if (!unix) {
 		system("cls");
+	}
+	else {
+		system("clear")
 	}
 }
 
@@ -290,22 +290,22 @@ void printLoop(unsigned char* data) {
 			outputchar |= 0x40;
 		}
 		if (data[8 * i + 2] & 0x01 != 0) {
-			outputchar = outputchar | 0x20;
+			outputchar |= 0x20;
 		}
 		if (data[8 * i + 3] & 0x01 != 0) {
-			outputchar = outputchar | 0x10;
+			outputchar |= 0x10;
 		}
 		if (data[8 * i + 4] & 0x01 != 0) {
-			outputchar = outputchar | 0x08;
+			outputchar |= 0x08;
 		}
 		if (data[8 * i + 5] & 0x01 != 0) {
-			outputchar = outputchar | 0x04;
+			outputchar |= 0x04;
 		}
 		if (data[8 * i + 6] & 0x01 != 0) {
-			outputchar = outputchar | 0x02;
+			outputchar |= 0x02;
 		}
 		if (data[8 * i + 7] & 0x01 != 0) {
-			outputchar = outputchar | 0x01;
+			outputchar |= 0x01;
 		}
 		std::cout << xorDecrypt(outputchar) << "	";
 		keyindex++;
