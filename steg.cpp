@@ -74,6 +74,7 @@ int main() {
 		clearScreen();
 		std::cout << "Enter your message to encrypt into the picture." << std::endl;
 		std::cin.ignore();
+		
 		getline(std::cin, msg);
 
 		clearScreen();
@@ -105,7 +106,7 @@ void clearScreen() {
 		system("cls");
 	}
 	else {
-		system("clear")
+		system("clear");
 	}
 }
 
@@ -186,7 +187,7 @@ unsigned char* writeBMP(char* filename, unsigned char* data) {
 unsigned char* mainLoop(unsigned char* data) {
 	int goloop = 0;
 	int msgposition = dataposition / 8;
-	while (goloop < 7){
+	while (goloop < 7) {
 		char location1 = 0x80;
 		char combination1;
 		combination1 = msg[msgposition] & location1;
