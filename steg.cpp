@@ -165,7 +165,7 @@ unsigned char* writeBMP(char* filename, unsigned char* data) {
 	f = fopen(filename, "wb");
 
 	if (f == NULL)
-		throw "Argument Exception";
+		throw "Argument Exception: File does not exist";
 
 	//unsigned char info[54];
 	fwrite(info, sizeof(unsigned char), 54, f); // read the 54-byte header
