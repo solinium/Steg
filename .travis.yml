@@ -14,8 +14,6 @@ notifications:
 addons:
   apt:
     packages:
-    - build-essential
-    - gcc
     - g++
 
 script:

@@ -1,5 +1,7 @@
 #include <string>
 #include <cstring>
+#include <cstdlib>
+#include <stdio.h>
 #include <iostream>
 
 //detect platform
