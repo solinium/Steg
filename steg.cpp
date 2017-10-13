@@ -4,18 +4,18 @@
 
 //detect platform
 #ifdef _WIN32
-bool isunix = false;
+bool isposix = false;
 #endif
 #ifdef __APPLE__
 	#include "TargetConditionals.h"
 	#ifdef TARGET_OS_MAC
-		bool isunix = true;
+		bool isposix = true;
 	#endif
 #endif
 #ifdef __linux__
-bool isunix = true;
+bool isposix = true;
 #elif __unix__
-bool isunix = true;
+bool isposix = true;
 #endif
 
 unsigned char* writeBMP(char* filename, unsigned char* data);
@@ -138,7 +138,7 @@ unsigned char* readBMP(char* filename) {
 	//read the 54-byte header
 	fread(info, sizeof(unsigned char), 54, f);
 
-	// extract image height and width from header
+	//extract image height and width from header
 	int width = *(int*)&info[18];
 	int height = *(int*)&info[22];
 
