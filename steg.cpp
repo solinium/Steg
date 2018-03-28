@@ -8,7 +8,7 @@ std::string key;
 int datalength;
 int keyindex = 0;
 int dataposition = 0;
-bool readorencrypt;
+bool readorwrite;
 bool argumentspecify;
 void xorEncrypt();
 char xorDecrypt(char printchar);
@@ -24,6 +24,17 @@ unsigned char picture[500];
 int main(int argc, char *argv[])
 {
 	system("clear");
+	if (argc == 1)
+	{
+		std::cout << "No arguments passed! try using -h\n";
+		exit(1);
+	}
+	std::string arg = argv[1];
+	if ((arg == "-h") || (arg == "--help"))
+	{
+		std::cout << "steg filename -r or -w (read or write)\nexample: steg test.bmp -r\n";
+		exit(0);
+	}
 	if (argc > 3)
 	{
 		std::cout << "There are too many arguments. Try using -h.\n";
@@ -34,22 +45,16 @@ int main(int argc, char *argv[])
 		std::cout << "There are aren't enough arguments specified. Try using -h.\n";
 		exit(1);
 	}
-	std::string arg = argv[1];
-
-	if ((arg == "-h") || (arg == "--help"))
-	{
-		std::cout << "steg filename -r or -e (read or encode)\nexample: steg test.bmp -r";
-	}
 	int i2;
 	std::string arg2 = argv[2];
 	if (arg2 == "-r" || arg2 == "-R")
 	{
-		readorencrypt = false;
+		readorwrite = false;
 		argumentspecify = true;
 	}
-	else if (arg2 == "-e" || arg2 == "-E")
+	else if (arg2 == "-w" || arg2 == "-W")
 	{
-		readorencrypt = true;
+		readorwrite = true;
 		argumentspecify = true;
 	}
 	else
@@ -59,6 +64,7 @@ int main(int argc, char *argv[])
 	}
 	char *filename = new char[arg.length() + 1];
 	strcpy(filename, arg.c_str());
+
 	FILE *f;
 	f = fopen(filename, "rb");
 	if (f == NULL)
@@ -67,38 +73,9 @@ int main(int argc, char *argv[])
 		throw "Argument Exception";
 	}
 	unsigned char *data = readBMP(filename);
-	if (argumentspecify == false)
+	if (readorwrite)
 	{
-		std::string choice;
-		std::cout << "Would you like to decrypt and read a message from the picture or encode an encrypted message in the picture? (read/encode)\n";
-		std::cin >> choice;
-		for (int i = 0; i < choice.length(); i++)
-		{
-			if (choice[i] >= (int)'A' && choice[i] <= (int)'Z')
-			{
-				choice[i] += 32;
-			}
-		}
-
-		if (choice == "e" || choice == "encode")
-		{
-			readorencrypt = true;
-		}
-		else if (choice == "r" || choice == "read")
-		{
-			readorencrypt = false;
-		}
-		else
-		{
-			std::cout << "Choice '" + choice + "' is not valid.\n";
-			exit(1);
-		}
-	}
-
-	if (readorencrypt)
-	{
-		system("clear");
-		std::cout << "Enter your message to encrypt into the picture.\n";
+		std::cout << "\nEnter your message to encrypt into the picture.\n";
 		std::cin.ignore();
 		getline(std::cin, msg);
 		system("clear");
@@ -117,8 +94,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		system("clear");
-		std::cout << "Enter your password.\n";
+		std::cout << "\nEnter your password...\n";
 		std::cin >> key;
 		system("clear");
 		printLoop(data);
